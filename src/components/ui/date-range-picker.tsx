@@ -15,11 +15,13 @@ import { cn } from '@/lib/utils'
 interface DateRangePicker extends React.ComponentProps<'div'> {
   date?: DateRange
   onDateChance: (date?: DateRange) => void
+  disabled?: boolean
 }
 
 export function DateRangePicker({
   className,
   date,
+  disabled,
   onDateChance,
 }: DateRangePicker) {
   return (
@@ -27,6 +29,7 @@ export function DateRangePicker({
       <Popover>
         <PopoverTrigger asChild>
           <Button
+            disabled={disabled}
             id="date"
             variant={'outline'}
             className={cn(

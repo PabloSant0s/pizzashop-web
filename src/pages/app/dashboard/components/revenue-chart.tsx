@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { subDays } from 'date-fns'
+import { Loader2 } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { DateRange } from 'react-day-picker'
 import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
@@ -49,6 +50,7 @@ export function RevenueChat() {
           <Label htmlFor="periodo">Período</Label>
           <DateRangePicker
             id="periodo"
+            disabled={!chartData}
             date={dateRange}
             onDateChance={setDateRange}
           />
@@ -56,27 +58,33 @@ export function RevenueChat() {
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={240}>
-          <LineChart data={chartData} style={{ fontSize: 12 }}>
-            <XAxis dataKey="date" axisLine={false} tickLine={false} dy={16} />
-            <YAxis
-              stroke="#888"
-              axisLine={false}
-              tickLine={false}
-              width={80}
-              tickFormatter={(value: number) =>
-                value.toLocaleString('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })
-              }
-            />
-            <Line
-              type="linear"
-              dataKey="receipt"
-              stroke={colors.violet['500']}
-              strokeWidth={2}
-            />
-          </LineChart>
+          {chartData ? (
+            <LineChart data={chartData} style={{ fontSize: 12 }}>
+              <XAxis dataKey="date" axisLine={false} tickLine={false} dy={16} />
+              <YAxis
+                stroke="#888"
+                axisLine={false}
+                tickLine={false}
+                width={80}
+                tickFormatter={(value: number) =>
+                  value.toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  })
+                }
+              />
+              <Line
+                type="linear"
+                dataKey="receipt"
+                stroke={colors.violet['500']}
+                strokeWidth={2}
+              />
+            </LineChart>
+          ) : (
+            <div className="flex h-[240px] w-full items-center justify-center">
+              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+            </div>
+          )}
         </ResponsiveContainer>
       </CardContent>
     </Card>
