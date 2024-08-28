@@ -46,7 +46,9 @@ export function SignUp() {
           onClick: () => navigate(`/sign-in?email=${data.email}`),
         },
       })
-    } catch {}
+    } catch {
+      toast.error('Erro ao cadastrar o restaurante.')
+    }
   }
 
   return (
